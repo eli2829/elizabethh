@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Página Web</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: pink; /* Fondo rosa */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .contenido {
+            width: 50%; /* Ocupa el 50% de la página */
+            background-color: white; /* Fondo blanco para el contenido */
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        header {
+            display: flex;
+            justify-content: space-between; /* Espacia el contenido del header */
+            align-items: flex-start; /* Alinea los elementos en la parte superior */
+            margin: 20px 0;
+        }
+        img {
+            height: 100px; /* Ajusta el tamaño del logo */
+        }
+        .titles {
+            display: flex;
+            flex-direction: column; /* Coloca los títulos en columna */
+            align-items: flex-start; /* Alinea a la izquierda */
+        }
+        footer {
+            text-align: center;
+            margin: 20px 0;
+        }
+        table {
+            width: 100%; /* Cambia a 100% para que se ajuste al contenedor */
+            border-collapse: collapse;
+            margin-bottom: 20px; /* Espacio inferior */
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        textarea {
+            width: 100%;
+            height: 100px;
+        }
+        .clearfix {
+            clear: both; /* Limpia el flujo */
+        }
+        .input-group {
+            margin-bottom: 10px;
+        }
+        .ticket {
+            display: none; /* Oculta el ticket inicialmente */
+            font-size: 14px;
+        }
+        .ticket h2 {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .ticket div {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="contenido">
+        <header>
+            <div class="titles">
+                <h1>Eliza CR</h1>
+                <h2>Detalles del Pedido</h2>
+            </div>
+            <img src="C:\Users\Heriberto\Desktop\shein\Logo.jpg" alt="Logo"> <!-- Asegúrate de que la ruta sea correcta -->
+        </header>
+        
+        <main>
+            <div class="input-group">
+                <label for="numeroPedido">Número de Pedido:</label>
+                <input type="text" id="numeroPedido" value="1" readonly>
+            </div>
+            <div class="input-group">
+                <label for="telefono">Número de Teléfono:</label>
+                <input type="text" id="telefono">
+            </div>
+
+            <h2>Productos</h2>
+            <table id="productosTable">
+                <tr>
+                    <th>Cantidad</th>
+                    <th>Nombre del Producto</th>
+                    <th>Precio Unitario</th>
+                    <th>Total</th>
+                </tr>
+            </table>
+            
+            <div class="clearfix">
+                <button onclick="agregarProducto()">Agregar Producto</button>
+            </div>
+            
+            <table id="totalGeneralTable">
+                <tr>
+                    <td><strong>Total General:</strong></td>
+                    <td id="totalGeneral">0</td>
+                </tr>
+            </table><br><br>
+
+            <h2>Notas</h2>
+            <textarea id="notas"></textarea>
+        </main>
+
+        <footer>
+            <button onclick="generarTicket()">Generar Ticket</button>
+            <div id="ticket" class="ticket"></div>
+        </footer>
+    </div>
+
+    <script>
+        let productoCount = 0; // Contador de productos
+        let numeroPedido = 1; // Contador de pedidos
+
+        function agregarProducto() {
+            productoCount++; // Aumenta el contador
+
+            // Crear una nueva fila
+            const table = document.getElementById("productosTable");
+            const newRow = table.insertRow(table.rows.length); // Inserta al final de la tabla
+            newRow.innerHTML = `
+                <td><input type="number" id="cantidad${productoCount}" value="1" onchange="calcularTotal(${productoCount})"></td>
+                <td><input type="text" id="nombre${productoCount}" onchange="actualizarNombre(${productoCount})"></td>
+                <td><input type="number" id="precio${productoCount}" value="0" onchange="calcularTotal(${productoCount})"></td>
+                <td id="total${productoCount}">0</td>
+            `;
+
+            // Actualizar el total general después de agregar un nuevo producto
+            actualizarTotalGeneral();
+        }
+
+        function calcularTotal(producto) {
+            const cantidad = document.getElementById("cantidad" + producto).value;
+            const precio = document.getElementById("precio" + producto).value;
+            const total = cantidad * precio;
+            document.getElementById("total" + producto).innerText = total;
+
+            // Actualizar el total general
+            actualizarTotalGeneral();
+        }
+
+        function actualizarTotalGeneral() {
+            let totalGeneral = 0;
+            for (let i = 1; i <= productoCount; i++) {
+                totalGeneral += parseFloat(document.getElementById("total" + i)?.innerText || 0);
+            }
+
+            // Actualiza el total general en la nueva tabla
+            document.getElementById("totalGeneral").innerText = totalGeneral;
+        }
+
+        function generarTicket() {
+            let ticket = "<div style='text-align: center;'><img src='C:\\Users\\Heriberto\\Desktop\\shein\\Logo.jpg' alt='Logo' style='height: 100px;'></div>"; // Agregar logo
+            ticket += "<h2>ELIZA CR</h2><h2>Detalles del Ticket</h2>";
+            ticket += "<div>Número de Pedido: " + numeroPedido + "</div>"; // Usar el número de pedido
+            ticket += "<div>Número de Teléfono: " + document.getElementById("telefono").value + "</div>";
+            ticket += "<div style='margin: 10px 0;'><strong>Productos:</strong></div>";
+
+            ticket += "<table style='width: 100%; border-collapse: collapse;'>";
+            ticket += "<tr><th>Cantidad</th><th>Nombre</th><th>Precio</th><th>Total</th></tr>";
+
+            for (let i = 1; i <= productoCount; i++) {
+                const nombre = document.getElementById("nombre" + i)?.value || "";
+                const cantidad = document.getElementById("cantidad" + i)?.value || 0;
+                const precio = document.getElementById("precio" + i)?.value || 0;
+                const total = document.getElementById("total" + i)?.innerText || 0;
+                if (nombre) {
+                    ticket += `<tr>
+                        <td>${cantidad}</td>
+                        <td>${nombre}</td>
+                        <td>${precio}</td>
+                        <td>${total}</td>
+                    </tr>`;
+                }
+            }
+
+            ticket += "</table>";
+            const notas = document.getElementById("notas").value;
+  ticket += "<div style='margin-top: 10px;'><strong>Total General:</strong> " + document.getElementById("totalGeneral").innerText + "</div>";
+
+            ticket += "<div><strong>Notas:</strong> " + notas + "</div>";
+          
+            const ticketDiv = document.getElementById("ticket");
+            ticketDiv.innerHTML = ticket;
+            ticketDiv.style.display = "block"; // Muestra el ticket
+
+            numeroPedido++; // Incrementar el número de pedido
+            document.getElementById("numeroPedido").value = numeroPedido; // Actualiza el número de pedido en el input
+        }
+
+        function actualizarNombre(producto) {
+            // Esta función puede estar vacía si no necesitas realizar ninguna acción al cambiar el nombre
+        }
+    </script>
+</body>
+</html>
+
+
+
+
