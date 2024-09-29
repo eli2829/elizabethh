@@ -42,7 +42,6 @@
             width: 100%; /* Ajusta al 100% */
             border-collapse: collapse;
             margin-bottom: 20px; /* Espacio inferior */
-            overflow-x: auto; /* Permite desplazamiento horizontal en pantallas pequeñas */
         }
         table, th, td {
             border: 1px solid black;
@@ -50,7 +49,6 @@
         th, td {
             padding: 10px;
             text-align: left;
-            word-wrap: break-word; /* Permite el ajuste de texto dentro de las celdas */
         }
         textarea {
             width: 100%;
@@ -96,16 +94,14 @@
             </div>
 
             <h2>Productos</h2>
-            <div style="overflow-x: auto;"> <!-- Permite desplazamiento horizontal -->
-                <table id="productosTable">
-                    <tr>
-                        <th>Cantidad</th>
-                        <th>Nombre del Producto</th>
-                        <th>Precio Unitario</th>
-                        <th>Total</th>
-                    </tr>
-                </table>
-            </div>
+            <table id="productosTable">
+                <tr>
+                    <th>Cantidad</th>
+                    <th>Nombre del Producto</th>
+                    <th>Precio Unitario</th>
+                    <th>Total</th>
+                </tr>
+            </table>
             
             <div class="clearfix">
                 <button onclick="agregarProducto()">Agregar Producto</button>
@@ -170,7 +166,7 @@
         }
 
         function generarTicket() {
-            let ticket = "<div style='text-align: center;'><img src="https://github.com/eli2829/elizabethh/raw/main/Logo.jpg" alt="Logo" style="height: 100px;"></div>"; // Agregar logo
+            let ticket = "<div style='text-align: center;'><img src='https://github.com/eli2829/elizabethh/raw/main/Logo.jpg' alt='Logo' style='height: 100px;'></div>"; // Agregar logo
             ticket += "<h2>ELIZA CR</h2><h2>Detalles del Ticket</h2>";
             ticket += "<div>Número de Pedido: " + numeroPedido + "</div>"; // Usar el número de pedido
             ticket += "<div>Número de Teléfono: " + document.getElementById("telefono").value + "</div>";
@@ -213,9 +209,3 @@
     </script>
 </body>
 </html>
-
-
-
-
-
-
