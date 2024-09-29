@@ -15,7 +15,8 @@
             height: 100vh;
         }
         .contenido {
-            width: 50%; /* Ocupa el 50% de la página */
+            width: 90%; /* Cambiado a 90% para mejor ajuste en móviles */
+            max-width: 600px; /* Máximo ancho en pantallas grandes */
             background-color: white; /* Fondo blanco para el contenido */
             padding: 20px;
             border-radius: 8px;
@@ -23,24 +24,22 @@
         }
         header {
             display: flex;
-            justify-content: space-between; /* Espacia el contenido del header */
-            align-items: flex-start; /* Alinea los elementos en la parte superior */
+            flex-direction: column; /* Cambiado a columna para mejor visualización en móviles */
+            align-items: center; /* Alinea al centro */
             margin: 20px 0;
         }
         img {
             height: 100px; /* Ajusta el tamaño del logo */
         }
         .titles {
-            display: flex;
-            flex-direction: column; /* Coloca los títulos en columna */
-            align-items: flex-start; /* Alinea a la izquierda */
+            text-align: center; /* Alinea el texto al centro */
         }
         footer {
             text-align: center;
             margin: 20px 0;
         }
         table {
-            width: 100%; /* Cambia a 100% para que se ajuste al contenedor */
+            width: 100%; /* Ajusta al 100% */
             border-collapse: collapse;
             margin-bottom: 20px; /* Espacio inferior */
         }
@@ -77,11 +76,11 @@
 <body>
     <div class="contenido">
         <header>
+            <img src="https://github.com/eli2829/elizabeth/raw/main/Logo.jpg" alt="Logo"> <!-- Asegúrate de que la ruta sea correcta -->
             <div class="titles">
                 <h1>Eliza CR</h1>
                 <h2>Detalles del Pedido</h2>
             </div>
-            <img src="https://github.com/eli2829/elizabeth/raw/main/Logo.jpg" alt="Logo"> <!-- Asegúrate de que la ruta sea correcta -->
         </header>
         
         <main>
@@ -113,7 +112,7 @@
                     <td><strong>Total General:</strong></td>
                     <td id="totalGeneral">0</td>
                 </tr>
-            </table><br><br>
+            </table>
 
             <h2>Notas</h2>
             <textarea id="notas"></textarea>
@@ -167,7 +166,7 @@
         }
 
         function generarTicket() {
-            let ticket = "<div style='text-align: center;'><img src='C:\\Users\\Heriberto\\Desktop\\shein\\Logo.jpg' alt='Logo' style='height: 100px;'></div>"; // Agregar logo
+            let ticket = "<div style='text-align: center;'><img src='https://github.com/eli2829/elizabeth/raw/main/Logo.jpg' alt='Logo' style='height: 100px;'></div>"; // Agregar logo
             ticket += "<h2>ELIZA CR</h2><h2>Detalles del Ticket</h2>";
             ticket += "<div>Número de Pedido: " + numeroPedido + "</div>"; // Usar el número de pedido
             ticket += "<div>Número de Teléfono: " + document.getElementById("telefono").value + "</div>";
@@ -193,8 +192,7 @@
 
             ticket += "</table>";
             const notas = document.getElementById("notas").value;
-  ticket += "<div style='margin-top: 10px;'><strong>Total General:</strong> " + document.getElementById("totalGeneral").innerText + "</div>";
-
+            ticket += "<div style='margin-top: 10px;'><strong>Total General:</strong> " + document.getElementById("totalGeneral").innerText + "</div>";
             ticket += "<div><strong>Notas:</strong> " + notas + "</div>";
           
             const ticketDiv = document.getElementById("ticket");
@@ -211,6 +209,7 @@
     </script>
 </body>
 </html>
+
 
 
 
